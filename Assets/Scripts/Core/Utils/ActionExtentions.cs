@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Core.Utils
+namespace Core
 {
 	public static class ActionExtentions
 	{
@@ -11,6 +11,16 @@ namespace Core.Utils
 		{
 			if (action != null)
 			{
+				var delegates = action.GetInvocationList();
+
+				foreach (var item in delegates)
+				{
+					if (item.Target == null)
+					{
+						return;
+					}
+				}
+
 				action.Invoke();
 			}
 		}
@@ -19,6 +29,16 @@ namespace Core.Utils
 		{
 			if (action != null)
 			{
+				var delegates = action.GetInvocationList();
+
+				foreach (var item in delegates)
+				{
+					if (item.Target == null)
+					{
+						return;
+					}
+				}
+
 				action.Invoke(arg);
 			}
 		}
@@ -27,6 +47,16 @@ namespace Core.Utils
 		{
 			if (action != null)
 			{
+				var delegates = action.GetInvocationList();
+
+				foreach (var item in delegates)
+				{
+					if (item.Target == null)
+					{
+						return;
+					}
+				}
+
 				action.Invoke(arg1, arg2);
 			}
 		}
@@ -35,6 +65,16 @@ namespace Core.Utils
 		{
 			if (action != null)
 			{
+				var delegates = action.GetInvocationList();
+
+				foreach (var item in delegates)
+				{
+					if (item.Target == null)
+					{
+						return;
+					}
+				}
+
 				action.Invoke(arg1, arg2, arg3);
 			}
 		}
@@ -43,6 +83,16 @@ namespace Core.Utils
 		{
 			if (action != null)
 			{
+				var delegates = action.GetInvocationList();
+
+				foreach (var item in delegates)
+				{
+					if (item.Target == null)
+					{
+						return;
+					}
+				}
+
 				action.Invoke(arg1, arg2, arg3, arg4);
 			}
 		}

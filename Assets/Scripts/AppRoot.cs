@@ -3,18 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Core.DI;
 using Core;
+using Core.Log;
 
 public class AppRoot : MonoBehaviour
 {
 
-	void Start ()
+	private void Awake ()
 	{
 		DependencyManager.AddDependency<AppStateMachine>(new AppStateMachine());
-		DependencyManager.ResolveDependency<AppStateMachine>().Fire(AppState.Menu);
-	}
-	
-	void Update ()
-	{
-		
+		DependencyManager.AddDependency<SceneTransitionStateMachine>(new SceneTransitionStateMachine());
+		DependencyManager.AddDependency<ILog>(new DebugLog());
 	}
 }

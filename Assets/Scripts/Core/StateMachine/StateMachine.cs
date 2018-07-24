@@ -2,16 +2,75 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Core.Utils;
+using Core.DI;
 
 namespace Core
 {
-	public class StateMachine<E> where E:struct
+	public class StateMachine<TState> where TState:struct
 	{
-		protected E CurrentState;
-		private Dictionary<E, List<Action>> Subscriptions;
+		protected TState currentState;
+		protected TState oldState;
+		private Dictionary<TState, List<Action>> Subscriptions;
 
-		public void Fire(E state)
+		public TState CurrentState
+		{
+			get
+			{
+				return currentState;
+			}
+			protected set
+			{
+				oldState = currentState;
+				currentState = value;
+			}
+		}
+
+		public TState OldState
+		{
+			get
+			{
+				return oldState;
+			}
+		}
+
+		public StateMachine(TState state)
+		{
+			CurrentState = state;
+		}
+
+		protected virtual Dictionary<TState, List<TState>> Transitions
+		{
+			get
+			{
+				return null;
+			}
+		}
+
+		public void Fire(TState state)
+		{
+			if (Transitions == null)
+			{
+				this.GetLog().LogError(LogChanel.StateMachine, "No transitions");
+			}
+			else
+			if (Transitions[CurrentState] == null)
+			{
+				this.GetLog().LogError(LogChanel.StateMachine, string.Format("No transition from {0}", CurrentState));
+			}
+			else
+			if (!Transitions[CurrentState].Contains(state))
+			{
+				this.GetLog().LogError(LogChanel.StateMachine, string.Format("No transition from {0} to {1}", CurrentState, state));
+			}
+			else
+			{
+				this.GetLog().Log(LogChanel.StateMachine, string.Format("Transition from {0} to {1}", CurrentState, state));
+				CurrentState = state;
+				InternalFire(state);
+			}
+		}
+
+		protected void InternalFire(TState state)
 		{
 			if (Subscriptions != null && Subscriptions.ContainsKey(state))
 			{
@@ -22,7 +81,7 @@ namespace Core
 			}
 		}
 
-		public void Subscribe(E state, Action callback, bool duplicateCheck = true)
+		public void Subscribe(TState state, Action callback, bool duplicateCheck = true)
 		{
 			if (callback == null)
 			{
@@ -31,7 +90,7 @@ namespace Core
 
 			if (Subscriptions == null)
 			{
-				Subscriptions = new Dictionary<E, List<Action>>();
+				Subscriptions = new Dictionary<TState, List<Action>>();
 			}
 
 			if (!Subscriptions.ContainsKey(state))
@@ -58,7 +117,7 @@ namespace Core
 			}
 		}
 
-		public void Unsubscribe(E state, object target)
+		public void Unsubscribe(TState state, object target)
 		{
 			if (Subscriptions == null || !Subscriptions.ContainsKey(state))
 			{

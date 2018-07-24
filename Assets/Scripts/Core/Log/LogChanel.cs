@@ -5,15 +5,9 @@ using System.Text;
 
 namespace Core
 {
-	public enum AppState
+	public enum LogChanel
 	{
-		Splash,
-		Preloader,
-		Menu,
-		Pause,
-		Game,
-		GameOver,
-		Exit,
-		SceneLoading,
+		StateMachine,
+		Serialization,
 	}
 }

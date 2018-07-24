@@ -5,15 +5,11 @@ using System.Text;
 
 namespace Core
 {
-	public enum AppState
+	public enum SceneTransitionState
 	{
-		Splash,
-		Preloader,
-		Menu,
-		Pause,
-		Game,
-		GameOver,
-		Exit,
-		SceneLoading,
+		Idle,
+		TransitionFrom,
+		Loading,
+		TransitionTo,
 	}
 }
