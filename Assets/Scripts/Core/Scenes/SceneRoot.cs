@@ -35,6 +35,11 @@ namespace Core
 		protected virtual void Init()
 		{
 			AppStateMachine.Fire(State);
+
+			if (SceneTransitionStateMachine.CurrentState != SceneTransitionState.Idle)
+			{
+				SceneTransitionStateMachine.Fire(SceneTransitionState.TransitionTo);
+			}
 		}
 
 		private void OnDestroy()
