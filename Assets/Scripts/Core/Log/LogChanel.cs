@@ -9,5 +9,6 @@ namespace Core
 	{
 		StateMachine,
 		Serialization,
+		ObjectPool,
 	}
 }

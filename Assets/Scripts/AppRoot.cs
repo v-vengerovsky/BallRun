@@ -13,5 +13,6 @@ public class AppRoot : MonoBehaviour
 		DependencyManager.AddDependency<AppStateMachine>(new AppStateMachine());
 		DependencyManager.AddDependency<SceneTransitionStateMachine>(new SceneTransitionStateMachine());
 		DependencyManager.AddDependency<ILog>(new DebugLog());
+		DependencyManager.AddDependency<ObjectPool>(new ObjectPool());
 	}
 }
