@@ -51,7 +51,7 @@ namespace BallRun
 		{
 			get
 			{
-				return Collider.radius * transform.localScale.y;
+				return Collider.radius * Collider.transform.localScale.y;
 			}
 		}
 
@@ -111,7 +111,7 @@ namespace BallRun
 			}
 
 			Collider.transform.rotation = Quaternion.Euler(0, 0, (float)(Speed * Time.deltaTime * RunController.RotationSpeedMultiplier / Radius));
-			transform.position += speed * Time.deltaTime * Vector3.right;
+			transform.position += speed * Time.deltaTime * Vector3.right;	
 		}
 
 		private void Reset()

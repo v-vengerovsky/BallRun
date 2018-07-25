@@ -42,6 +42,14 @@ namespace BallRun
 			}
 		}
 
+		private LeaderBoard LeaderBoard
+		{
+			get
+			{
+				return DependencyManager.ResolveDependency<LeaderBoard>();
+			}
+		}
+
 		public float MinSpeed
 		{
 			get
@@ -128,6 +136,8 @@ namespace BallRun
 			}
 
 			PlatformMoveController.Speed = averageSpeed/Balls.Count;
+
+			LeaderBoard.UpdatePositions(Balls);
 		}
 
 		public void StartRun()
